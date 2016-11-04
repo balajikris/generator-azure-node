@@ -1,3 +1,6 @@
+
+# Under construction :construction:
+
 # generator-azure-node [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
 > Yeoman generator for Azure NodeJS projects
 
