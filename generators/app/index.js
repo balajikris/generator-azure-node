@@ -3,8 +3,6 @@ var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var yosay = require('yosay');
 var path = require('path');
-var fs = require('fs');
-//var request = require('request');
 
 module.exports = yeoman.Base.extend({
 
@@ -16,6 +14,7 @@ module.exports = yeoman.Base.extend({
     this.option('projectName', { type: String, required: true, desc: 'name for the project' });
     this.option('projectDescription', { type: String, required: true, desc: 'description for the project' });
 
+    // TODO: future feature.
     // this.option('azureServices', { type: String, require: false, desc: 'azure services the project will depend on.' });
 
     this.projectConfig = Object.create(null);
@@ -190,6 +189,8 @@ module.exports = yeoman.Base.extend({
   // Installation
   install: function () {
     process.chdir(this.projectConfig.name);
+    
+    // TODO: do this in the VSCode extension instead?
     this._openProject();
     
     this.installDependencies({
