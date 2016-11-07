@@ -1,12 +1,12 @@
 {
-    "name": <%= JSON.stringify(name) %>,
-    "description": <%= JSON.stringify(description) %>,
+    "name": <%- JSON.stringify(name) %>,
+    "description": <%- JSON.stringify(description) %>,
     "version": "0.1.0",
     "main": "./src/index.js",
     "dependencies": {
         "ms-rest": "*",
         "ms-rest-azure": "*",
-        "azure-arm-authorization": "*"
+        "azure": "*"
     },
     "devDependencies": {
         "mocha": "*",

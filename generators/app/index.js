@@ -10,14 +10,15 @@ module.exports = yeoman.Base.extend({
 
   constructor: function () {
     yeoman.Base.apply(this, arguments);
-    
+
     this.option('projectLanguage', { type: String, required: true, desc: 'language for the project: js or ts' });
-    this.option('projectTemplate', { type: String, required: false, desc: 'template kind: empty, rollup package'});
+    this.option('projectTemplate', { type: String, required: false, desc: 'template kind: empty, rollup package' });
     this.option('projectName', { type: String, required: true, desc: 'name for the project' });
+    this.option('projectDescription', { type: String, required: true, desc: 'description for the project' });
+
     // this.option('azureServices', { type: String, require: false, desc: 'azure services the project will depend on.' });
 
     this.projectConfig = Object.create(null);
-    this.projectConfig.installDependencies = false;
   },
 
   initializing: {
@@ -84,7 +85,7 @@ module.exports = yeoman.Base.extend({
         type: 'list',
         name: 'azureTemplateKind',
         message: 'Please select an azure template.',
-        choices:[
+        choices: [
           {
             name: 'Empty Project',
             value: 'empty'
@@ -106,7 +107,7 @@ module.exports = yeoman.Base.extend({
     askForProjectName: function () {
       var generator = this;
       if (generator.projectName) {
-        generator.projectConfig.projectName = generator.projectName;
+        generator.projectConfig.name = generator.projectName;
         return Promise.resolve();
       }
 
@@ -115,7 +116,24 @@ module.exports = yeoman.Base.extend({
         name: 'projectName',
         message: 'What\'s the name of your new project?',
       }).then(function (projectNameAnswer) {
-        generator.projectConfig.projectName = projectNameAnswer.projectName;
+        generator.projectConfig.name = projectNameAnswer.projectName;
+      });
+    },
+
+    // Ask for project description ("description" in package.json)
+    askForProjectDescription: function () {
+      var generator = this;
+      if (generator.projectDescription) {
+        generator.projectConfig.description = generator.projectDescription;
+        return Promise.resolve();
+      }
+
+      return generator.prompt({
+        type: 'input',
+        name: 'projectDescription',
+        message: 'What\'s the description of your new project?',
+      }).then(function (projectDescAnswer) {
+        generator.projectConfig.description = projectDescAnswer.projectDescription;
       });
     },
 
@@ -147,24 +165,50 @@ module.exports = yeoman.Base.extend({
   _writingJsProject: function () {
     var context = this.projectConfig;
 
-    this.directory(this.sourceRoot() + '/src', context.projectName + '/src');
-    this.directory(this.sourceRoot() + '/test', context.projectName + '/test');
+    this.directory(this.sourceRoot() + '/src', context.name + '/src');
+    this.directory(this.sourceRoot() + '/test', context.name + '/test');
+    
+    this.copy(this.sourceRoot() + '/gitignore', context.name + '/.gitignore');
+    this.template(this.sourceRoot() + '/README.md', context.name + '/README.md', context);
+    this.copy(this.sourceRoot() + '/jsconfig.json', context.name + '/jsconfig.json');
 
-    // TODO: template this.
-    this.copy(this.sourceRoot() + '/package.json', context.projectName + '/package.json');
+    switch (context.template) {
+      case 'empty':
+        this.template(this.sourceRoot() + '/EmptyPackage.json', context.name + '/package.json', context);
+        break;
+      case 'all-up':
+        this.template(this.sourceRoot() + '/AllupPackage.json', context.name + '/package.json', context);
+        break;
+      default:
+        // unknown project type
+        break;
+    }
+
+
   },
 
   // Installation
   install: function () {
-    // this.installDependencies();
+    process.chdir(this.projectConfig.name);
+    this._openProject();
+    
+    this.installDependencies({
+      npm: true,
+      bower: false
+    });
+  },
+
+  _openProject: function() {
+    this.log('');
+    this.log('Your project ' + this.projectConfig.name + ' has been created!');
+    this.log('');
+    this.log('Opening project in Visual Studio Code...');
+    this.spawnCommand('code', ['.']);
   },
 
   // End
   end: function () {
-    this.log('');
-    this.log('Your project ' + this.projectConfig.projectName + ' has been created!');
-    this.log('');
-    this.log('Opening project in Visual Studio Code...');
-    this.spawnCommand('code', [this.projectConfig.projectName]);
+
   }
+
 });
