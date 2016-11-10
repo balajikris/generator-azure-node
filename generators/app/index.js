@@ -157,19 +157,29 @@ module.exports = yeoman.Base.extend({
 
   // write typescript project
   _writingTsProject: function () {
+    this._writingCommonProjectFiles();
 
+    var context = this.projectConfig;
+    this.copy(this.sourceRoot() + '/tsconfig.json', context.name + '/tsconfig.json');
   },
 
   // write javascript project
   _writingJsProject: function () {
+    this._writingCommonProjectFiles();
+
+    var context = this.projectConfig;
+    this.copy(this.sourceRoot() + '/jsconfig.json', context.name + '/jsconfig.json');
+  },
+
+  // write common project files
+  _writingCommonProjectFiles: function () {
     var context = this.projectConfig;
 
     this.directory(this.sourceRoot() + '/src', context.name + '/src');
     this.directory(this.sourceRoot() + '/test', context.name + '/test');
-    
+
     this.copy(this.sourceRoot() + '/gitignore', context.name + '/.gitignore');
     this.template(this.sourceRoot() + '/README.md', context.name + '/README.md', context);
-    this.copy(this.sourceRoot() + '/jsconfig.json', context.name + '/jsconfig.json');
 
     switch (context.template) {
       case 'empty':
@@ -182,24 +192,22 @@ module.exports = yeoman.Base.extend({
         // unknown project type
         break;
     }
-
-
   },
 
   // Installation
   install: function () {
     process.chdir(this.projectConfig.name);
-    
+
     // TODO: do this in the VSCode extension instead?
     this._openProject();
-    
+
     this.installDependencies({
       npm: true,
       bower: false
     });
   },
 
-  _openProject: function() {
+  _openProject: function () {
     this.log('');
     this.log('Your project ' + this.projectConfig.name + ' has been created!');
     this.log('');
