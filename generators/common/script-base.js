@@ -18,7 +18,7 @@ util.inherits(NamedGenerator, yeoman.generators.NamedBase);
 NamedGenerator.prototype.generateTemplateFile = function(templateFile, extension, templateData) {
   // the target file is created from *name* property
   var targetFile = this.createTargetFile(extension);
-  this.log('You called the aspnet subgenerator with the arg ' + chalk.green(this.arguments[0] || targetFile));
+  this.log('You called the subgenerator with the arg ' + chalk.green(this.arguments[0] || targetFile));
   if (templateData !== null) {
     this.fs.copyTpl(this.templatePath(templateFile), this.destinationPath(targetFile), templateData);
   } else {
