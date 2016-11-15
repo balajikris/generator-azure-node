@@ -198,8 +198,7 @@ module.exports = yeoman.Base.extend({
   install: function () {
     process.chdir(this.projectConfig.name);
 
-    // TODO: do this in the VSCode extension instead?
-    this._openProject();
+    this._notifyCompletion();
 
     this.installDependencies({
       npm: true,
@@ -213,6 +212,17 @@ module.exports = yeoman.Base.extend({
     this.log('');
     this.log('Opening project in Visual Studio Code...');
     this.spawnCommand('code', ['.']);
+  },
+
+  _notifyCompletion: function() {
+    this.log('');
+    this.log('Your project ' + this.projectConfig.name + ' has been created!');
+    this.log('');
+    this.log('To start editing with Visual Studio Code, use the following commands:');
+    this.log('');
+    this.log('     cd ' + this.projectConfig.name);
+    this.log('     code .');
+    this.log('');
   },
 
   // End
