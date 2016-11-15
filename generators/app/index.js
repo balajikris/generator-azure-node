@@ -140,7 +140,7 @@ module.exports = yeoman.Base.extend({
 
   // Write files
   writing: function () {
-    this.sourceRoot(path.join(__dirname, './templates/' + this.projectConfig.type));
+    this.sourceRoot(path.join(__dirname, '../templates/' + this.projectConfig.type));
 
     switch (this.projectConfig.type) {
       case 'empty-project-ts':
