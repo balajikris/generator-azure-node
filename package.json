@@ -1,12 +1,12 @@
 {
   "name": "generator-azure-node",
-  "version": "0.1.0",
+  "version": "0.1.0-preview",
   "description": "Yeoman generator for Azure NodeJS projects",
   "homepage": "",
   "author": {
-    "name": "Balaji Krishnan",
-    "email": "balaji.krishnan@microsoft.com",
-    "url": "https://github.com/balajikris"
+    "name": "Microsoft Corporation",
+    "email": "azsdkteam@microsoft.com",
+    "url": "https://github.com/Azure/azure-sdk-for-node"
   },
   "files": [
     "generators"
