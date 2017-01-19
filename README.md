@@ -1,6 +1,4 @@
 
-# Under construction :construction:
-
 # generator-azure-node [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
 > Yeoman generator for Azure NodeJS projects
 
@@ -28,7 +26,7 @@ yo azure-node
 
 ## License
 
-Apache-2.0 © [Balaji Krishnan](https://github.com/balajikris)
+Apache-2.0 © [Azure SDK Team](https://github.com/Azure/azure-sdk-for-node)
 
 
 [npm-image]: https://badge.fury.io/js/generator-azure-node.svg
