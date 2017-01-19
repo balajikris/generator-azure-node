@@ -36,7 +36,7 @@
     "yeoman-assert": "^2.2.1",
     "yeoman-test": "^1.5.1"
   },
-  "repository": "balajikris/generator-azure-node",
+  "repository": "https://github.com/Azure/azure-sdk-for-node",
   "scripts": {
     "test": "mocha"
   },
